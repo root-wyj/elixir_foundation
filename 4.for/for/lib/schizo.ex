@@ -25,6 +25,7 @@ defmodule Schizo do
             end
           end)
           |> Enum.join(" ")
+          
     end
 
     def unvowel (string) do

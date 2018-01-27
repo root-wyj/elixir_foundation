@@ -33,4 +33,14 @@ defmodule CounterSelf do
         :ok
     end
 
+
+    def receive_after() do
+        receive do
+            {:receive_after, msg} ->
+                IO.puts "#{inspect msg}"
+            after 5000 ->
+                IO.puts ":receiver_after 5s, so end"
+        end
+    end
+
 end
