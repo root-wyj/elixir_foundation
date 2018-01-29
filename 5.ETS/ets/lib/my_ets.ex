@@ -9,7 +9,7 @@ defmodule MyEts do
     def start_link(opts) do
         # 1. Pass the name to GenServer's init
         server = Keyword.fetch(opts, :name);
-        GenServer.start_link(_MODULE_, server, opts);
+        GenServer.start_link(__MODULE__, server, opts);
     end
 
     def lookup(server, name) do
@@ -41,7 +41,7 @@ defmodule MyEts do
             {:ok, pid} -> 
                 {:noreply, {names, refs}}
             :error ->
-                {:ok, pid} = start_link()
+                {:ok, pid} = start_link([])
                 ref = Process.monitor(pid)
                 :ets.insert(names, {name, pid})
                 {:noreply, {names, refs}}
