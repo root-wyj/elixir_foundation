@@ -6,13 +6,14 @@ defmodule MyagentTest do
   #在该test中， 运行在所有test之前，并且将返回值放入到test context中
   #test context 是一个map，所以这里返回的返回值会直接合并到其中。
   setup do
+    #这种方式启动的进程，会在test结束的时候自动终止
+    # supervise 监督
     {:ok, bucket} = start_supervised(Myagent)
     %{bucket: bucket}
   end
 
   test "stores values by key", %{bucket: bucket} do
-    #这种方式启动的进程，会在test结束的时候自动终止
-    # supervise 监督
+    
     assert Myagent.get(bucket, "milk") == nil
 
     Myagent.put(bucket, "milk", 3)

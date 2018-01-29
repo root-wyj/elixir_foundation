@@ -1,0 +1,13 @@
+# GenServer
+
+1. 一个GenServer通常是由两部分组成，客户端的API和server端的callback。这两部分可能在也可能会不在一个文件中，但他们都运行在不同的Processes中。客户端传递消息给服务端，服务端（在一个进程中）序列化请求消息，并处理，保证数据的一致性。
+
+2. GenServer可以接收两种请求：`calls`和`casts`。`Calls` 是同步的并且服务器必须发出响应给这样的请求。`Casts`是异步的，服务器也不需要返回一个Response。
+
+3. `GenServer.call` 和 `GenServer.cast` 都可以发送请求。通过定义函数`handle_call/3` 和 `handle_cast/2` 来处理消息。
+
+4. `init/1` callback。这个回调是用来响应 `GenServer.start_link/3`请求的， 并且返回了`{:ok, state}`.这个 `status`贯穿了整个服务器回调，在每一个回调函数中都有（就是第三个参数 status）
+
+5. 还有其他的一些回调，例如 `terminate/2` 和 `code_change/3`等
+
+6. 更多详细的可以参考文档 [hexdocs_GenServer](https://hexdocs.pm/elixir/GenServer.html)
