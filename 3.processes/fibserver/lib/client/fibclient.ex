@@ -15,9 +15,13 @@ defmodule FibClient do
 
     def start_caculate(list) do
 
-        # pid_result = spawn_link(FibClient, :receive_result, [self()])
+        receive do
+            {:ready, server} ->
+                [2, 5, 8, 10, 15]
+                    |> Enum.map(spawn_link(FibClient, fun, self()))
+                    |> schedule(server)
 
-        list |> Enum.map(fn n ->
+        [2, 5, 8, 10, 15] |> Enum.map(fn n ->
             receive do
                 {:ready, server} ->
                     IO.puts "get ready msg. so send #{n} to server #{inspect server}"
@@ -29,6 +33,12 @@ defmodule FibClient do
             end
         end
         )
+    end
+
+    def schedule([head | tail]) do
+        receive do
+            
+        end
     end
 
     # def receive_result(pid_parent) do
@@ -46,5 +56,30 @@ defmodule FibClient do
     end
 
     # spawn(FibClient, :receiver, [[2, 3, 40, 5]])
+
+    def start_caculate do
+        receive do
+            {:ready, pid_server} ->
+                recursive([2, 5, 8, 10, 15], pid_server)
+        end
+    end
+
+    def recursive([], pid_server) do
+        send pid_server, {:shutdown}
+    end
+
+    def recursive([head | tail], pid_server) do
+        caculate(pid_server, head, self())
+        recursive(tail, pid_server)
+    end
+
+    def caculate(pid_server, n, pid_from) do
+        send pid_server, {:fib, n, pid_from}
+        IO.puts "send to server #{n}"
+        receive do
+            {:answer, ^n, result, ^pid_server} ->
+                IO.puts "get from server #{n}, result is :#{result}"
+        end
+    end
 
 end
