@@ -19,6 +19,10 @@ defmodule Fib do
             end
         end
 
+        def just_fib(n) do
+            caculate_(n)
+        end
+
         defp caculate_(1), do: 1
     
         defp caculate_(2), do: 1
@@ -28,15 +32,60 @@ defmodule Fib do
         end
     end
 
+    defmodule ServerAgent do
+        # 使用Agent保存fib算出来的结果，效率更高
+        use Agent
+
+        def fib(pid_client) do
+            if Process.whereis(__MODULE__) == nil do
+                Agent.start_link(fn -> %{} end, name: __MODULE__)
+            end
+            send pid_client, {:ready, self()}
+            receive do
+                {:fib, n, pid_client} ->
+                    send pid_client, {:answer, n, caculate_(n), self()}
+                    fib(pid_client)
+                {:shutdown} ->
+                    Logger.debug "server #{inspect self()} exit"
+                    Logger.debug "Agent state: #{inspect Agent.get(__MODULE__, fn state -> state end)}"
+                    exit(:normal)
+            end
+        end
+
+        def just_fib(n) do
+            if Process.whereis(__MODULE__) == nil do
+                Agent.start_link(fn -> %{} end, name: __MODULE__)
+            end
+
+            caculate_(n)
+        end
+
+        defp caculate_(1), do: 1
+        defp caculate_(2), do: 1
+
+        defp caculate_(n) do
+            case Agent.get(__MODULE__, fn status -> Map.get(status, n) end) do
+                nil ->
+                    tmp = caculate_(n-1) + caculate_(n-2)
+                    Agent.update(__MODULE__, fn state -> Map.put(state, n, tmp) end)
+                    tmp
+                result ->
+                    result
+            end
+            
+        end
+    
+    end
+
     defmodule Client do
         # 这里启动了n个server进程，他们会向客户端进程发送准备好了的消息
         # 这时候 客户端就向服务器发送请求，
 
         # 在这个模型中，客户端只是接受服务器给的消息，并作出相应的动作。而服务器
         #   仅仅是计算
-        def run(process_count, fib_list) do
+        def run(process_count, fib_list, module, fun) do
             (1..process_count)
-                |> Enum.map(fn _n -> spawn(Fib.Server, :fib, [self()]) end)
+                |> Enum.map(fn _n -> spawn(module, fun, [self()]) end)
                 |> schedule_process_(fib_list, [])
         end
 
@@ -74,7 +123,11 @@ defmodule Fib do
 
 
     def test do
-        Client.run(5, [2, 5, 10, 15, 37])
+        Client.run(5, [2, 5, 10, 15, 37], Fib.Server, :fib)
+    end
+
+    def test2 do
+        Client.run(5, [50, 100, 25, 200, 6], Fib.ServerAgent, :fib)
     end
 
     # 写在最后 我认为这里例子充分体现了 `函数式编程` 和 `消息式编程` 的精髓
