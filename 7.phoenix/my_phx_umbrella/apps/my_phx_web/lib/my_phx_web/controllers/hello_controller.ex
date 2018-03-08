@@ -4,7 +4,7 @@ defmodule MyPhxWeb.HelloController do
     require Logger
     import Phoenix.Naming
 
-    plug :put_headers, %{content_encoding: "gzip", cache_control: "max-age=3600"}
+    plug :put_headers, %{content_encoding: "gzip", cache_control: "max-age=3600", "Access-Control-Allow-Origin": "*"}
 
     def hello(conn, msg) do
         Logger.info "conn:#{inspect conn}"
