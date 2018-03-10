@@ -8,3 +8,5 @@
 - `mix deps.get` 获取依赖
 - `mix deps.compile` 编译依赖
 - `mix compile` 编译
+
+> **Phoenix v1.3.1 有一个bug，需要修改源码 phoenix/lib/phoenix/code_reloader.server.ex 27行 修改如下 `if not checked? and Code.ensure_loaded?(Mix.Project) and not Mix.Project.umbrella? do`**
