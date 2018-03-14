@@ -8,3 +8,4 @@
 - `mix deps.get` 获取依赖
 - `mix deps.compile` 编译依赖
 - `mix compile` 编译
+- `MIX_ENV=prod mix phx.server` 以开发环境启动
