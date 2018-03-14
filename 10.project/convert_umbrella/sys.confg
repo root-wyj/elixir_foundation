@@ -1,0 +1,7 @@
+[{
+    kernel,
+    [
+        {sync_nodes_optional, ['huang@192.168.2.56']},
+        {sync_nodes_timeout, 60000}
+    ]
+}].
