@@ -37,11 +37,8 @@ defmodule WebsocketWeb.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      # {:phoenix, override: true, path: "C:\\Users\\Administrator\\.hex\\packages\\hexpm\\phoenix-1.3.0.tar"},
       {:phoenix, "~> 1.3.0", override: true},
       {:phoenix_pubsub, "~> 1.0"},
-      {:phoenix_html, "~> 2.10"},
-      {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
       {:websocket, in_umbrella: true},
       {:cowboy, "~> 1.0"}
