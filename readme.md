@@ -18,3 +18,9 @@
 - `Ctrl + P` 快速打开文件
 - `Ctrl + Shift + P` 快捷键面板
 
+
+## elixir erlang 的一些好文
+
+- [讲了Elixir和Go的区别](https://my.oschina.net/nicozhang/blog/1645056)
+
+- [Erlang的调度原理（译文）](http://www.cnblogs.com/zhengsyao/p/how_erlang_does_scheduling_translation.html)

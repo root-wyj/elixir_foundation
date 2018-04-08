@@ -10,4 +10,7 @@
 - `mix compile` 编译
 - `MIX_ENV=prod mix phx.server` 以开发环境启动
 
+配置mirrors -- https://hex.pm/docs/mirrors
+该命令可以直接配置：`mix hex.config mirror_url https://hexpm.upyun.com`
+
 > **Phoenix v1.3.1 有一个bug，需要修改源码 phoenix/lib/phoenix/code_reloader.server.ex 27行 修改如下 `if not checked? and Code.ensure_loaded?(Mix.Project) and not Mix.Project.umbrella? do`**
