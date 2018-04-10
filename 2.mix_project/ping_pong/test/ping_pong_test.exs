@@ -1,7 +1,7 @@
 defmodule PingPongTest do
   use ExUnit.Case
   doctest PingPong
-
+  # mix test 启动测试
   test "greets the world" do
     #spawn 函数接受一个模块，函数和list的参数
     #然后会启动一个新的进程，来运行这个函数，当这个函数执行完之后，这个进程就死了。

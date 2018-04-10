@@ -24,3 +24,14 @@
 - [讲了Elixir和Go的区别](https://my.oschina.net/nicozhang/blog/1645056)
 
 - [Erlang的调度原理（译文）](http://www.cnblogs.com/zhengsyao/p/how_erlang_does_scheduling_translation.html)
+
+## erlang 的库
+
+- 存储数据的表库 `:ets`、`:dets`、`Mnesia`
+
+- 随机函数库： `:rand`、`:random`
+
+- 日期： `:calendar`
+
+- list：`:lists`
+
