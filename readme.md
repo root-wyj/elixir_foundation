@@ -6,6 +6,8 @@
 5. [elixir dailytrip](https://www.dailydrip.com/topics/elixir/drips)
 6. [Elixir, OTP, Ecto, 和 Phoenix 免费教程！](https://www.jianshu.com/p/6c436d487265)
 
+`HEX_MIRROR=https://hexpm.upyun.com mix deps.get`
+`MIX_ENV=dev mix phx.server`
 
 ##编辑器 VSCode
 
@@ -34,4 +36,4 @@
 - 日期： `:calendar`
 
 - list：`:lists`
-
+ 
